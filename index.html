@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>baseball number game</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+
+<body>
+  <main>
+    <section class="__wrap">
+      <div class="__box">
+        <h1> 야구게임! </h1>
+        <div class="__flex">
+          <input type="text" class="__input" onkeydown="handleKeyDown(event)" minlength="3" maxlength="3" placeholder="숫자 세 개를 입력해주세요." />
+          <p class="__tnb2 __guideText"></p>
+        </div>
+        <div>
+          <ul class="__tryList">
+          </ul>
+          <button type="button" class="__initButton" onclick="resetAll()">초기화</button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script>
+    // Variation
+    let answer = ''
+    let tryNumber = 0
+    // const filter = !/^\d$/
+    const inputItem = document.querySelector('.__input')
+    const tryList = document.querySelector('.__tryList')
+    let tryListItem = document.querySelectorAll('.__li')
+    const guideItem = document.querySelector('.__guideText')
+    let stateDisable = false;
+    // Function
+    const getAnswer = () => {
+      let value= ''
+      let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+      while (value.length < 3) {
+        const randomNumber = Math.floor(Math.random() * numbers.length)
+        value += numbers.splice(randomNumber, 1)[0]
+      }
+      answer = value
+      console.log(answer)
+    }
+    getAnswer()
+    const handleKeyDown = (event) => {
+      console.log('event.key',event.key)
+      if (event.key === 'Enter') {
+        pressEnter()
+      } else if (event.key === 'Backspace') {
+        
+      } else if (!/^\d$/.test(event.key)) {
+        event.preventDefault()
+        alert('숫자만 입력 할 수 있습니다.')
+      } else {
+        console.log('NaN')
+      }
+    }
+    const pressEnter = () => {
+      if (inputItem.value.length < 3) {
+        alert('3자리 값을 입력하지 않았습니다.')
+        return
+      } else {
+        addTryList()
+        tryNumber += 1
+        checkValue()
+      }
+    }
+    const addTryList = () => {
+      tryList.insertAdjacentHTML('beforeend', `
+      <li class="__li">
+        <span class="__flex __noWrap __listItem">
+          <em>${tryNumber}회 시도</em>
+          <p class="__setEnd">입력값: <strong>${inputItem.value}</strong></p>
+        </span>
+      </li>
+      `)
+    }
+    const initInputItem = () => {
+      inputItem.value = ''
+    }
+    const resetAll = () => {
+      initInputItem()
+      getAnswer()
+      tryNumber = 0
+      let tryListItem = document.querySelectorAll('.__li')
+      tryListItem?.forEach((item, i) => {
+        item.remove()
+      })
+    }
+    const checkValue = () => {
+      let value = inputItem.value
+      let strike = 0, ball = 0
+      value.split('').forEach((item, idx) => {
+        if (answer[idx] === item) strike++
+        else if (answer.includes(item)) ball++
+      })
+      guideItem.innerText=`${strike}Strike, ${ball}Ball`
+      if (strike === 3) {
+        guideItem.innerText=`${strike}Strike!, ${tryNumber}회 만에 성공하였습니다.`
+      }
+      initInputItem()
+    }
+  </script>
+</body>
+
+</html>

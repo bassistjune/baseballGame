@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+* {margin: 0; padding: 0; box-sizing: border-box;}
+li {list-style: none;}
+i, em, span {font-style: normal;}
+input, select, button, a {border: 1px solid #333; color: #333; background-color: #fff;}
+.reverse {border: 1px solid #333; background-color: #333; color: #fff;}
+
+.__flex {display: flex; flex-direction: column;}
+
+html, body, main {height: 100%;}
+main {
+  padding: 2rem 0;
+}
+.__wrap {height: 100%; display: flex; width: 100%; justify-content: center; align-items: center;}
+h1 {text-align: center;}
+.__box {display: flex; flex-direction: column; justify-content: stretch; gap: 0.75rem;}
+button, input {width: 100%; padding: 0.125rem 0.125rem; font-size: 16px;}
+button {font-weight: 500; margin: 1.5rem 0;}
+.__flex.__noWrap {flex-wrap: nowrap; flex-direction: row;}
+.__flex .__setEnd {margin-left: auto;}
+
+.__tnb2 {margin: 0.5rem 0;}
+
+.__listItem {padding: 0.125rem 0;}
